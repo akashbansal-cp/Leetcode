@@ -1,0 +1,18 @@
+//https://leetcode.com/problems/destination-city/
+class Solution {
+public:
+    string destCity(vector<vector<string>>& paths) {
+        set<string> source;
+        set<string> dest;
+        for(int i=0;i<paths.size();++i){
+            source.insert(paths[i][0]);
+            dest.insert(paths[i][1]);
+        }
+        for(auto i=dest.begin();i!=dest.end();++i){
+            auto itr = source.find(*i);
+            if(itr==source.end())
+                return  *i;
+        }
+        return "";
+    }
+};
