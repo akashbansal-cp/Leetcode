@@ -1,0 +1,23 @@
+//https://leetcode.com/problems/ugly-number-ii/
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        vector<int> u;
+        u.push_back(1);
+        int a=0,b=0,c=0;
+        --n;
+        while(n--){
+            int m;
+            m=u[a]*2>u[b]*3?u[b]*3:u[a]*2;
+            m=m>u[c]*5?u[c]*5:m;
+            if(m==u[a]*2)
+                ++a;
+            if(m==u[b]*3)
+                ++b;
+            if(m==u[c]*5)
+                ++c;
+            u.push_back(m);
+        }
+        return u[u.size()-1];
+    }
+};
