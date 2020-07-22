@@ -1,0 +1,26 @@
+//https://leetcode.com/problems/non-decreasing-array/
+class Solution {
+public:
+    bool checkPossibility(vector<int>& nums) {
+        bool z = true;
+        for(int i=0;i<nums.size()-1;++i){
+            if(nums[i]>nums[i+1]){
+                int m=nums[i];
+                vector<int> chk=nums;
+                nums[i]=nums[i+1];
+                chk[i]=chk[i+1];
+                sort(chk.begin(),chk.end());
+                bool a,b;
+                a=(chk==nums);
+                chk=nums;
+                nums[i]=nums[i+1]=chk[i]=chk[i+1]=m;
+                sort(chk.begin(),chk.end());
+                b=(chk==nums);
+                if(a||b)
+                    return true;
+                else
+                    return false;;
+            }
+        }
+    }
+};
