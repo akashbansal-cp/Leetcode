@@ -1,0 +1,66 @@
+//https://leetcode.com/problems/validate-ip-address/
+string valIPv6(string IP){
+    if(IP[0]==':' || IP[IP.length()-1]==':'){
+		return "Neither";
+	}
+    int len=IP.length();
+    int n=0,b=0;
+    while(len--){
+        if(b>4 || IP[len]=='.')
+            return "Neither";
+        if(IP[len]==':'){
+            if(IP[len+1]==':')
+        	    break;
+            else
+                ++n,b=0;
+        }
+        else if((IP[len]>='0' && IP[len]<='9') || (IP[len]>='a' && IP[len]<='f') || (IP[len]>='A' && IP[len]<='F'))
+            ++b;
+        else
+            return "Neither";
+    }
+    if(n==7)
+        return "IPv6";
+    else 
+        return "Neither";
+}
+string valIPv4(string IP){
+    if(IP[0]=='.' || IP[IP.length()-1]=='.'){
+		return "Neither";
+	}    
+	if(IP[0]=='0' && IP[1]!='.')
+		return "Neither";
+    int n=0,b=0,val=0;
+    for(int len=0;len<IP.length();++len){
+        if(b>3 || val>255 || IP[len]==':'){
+        	return "Neither";
+		}
+        if(IP[len]=='.'){
+        	if((IP[len+1]=='0' && IP[len+2]!='.') || IP[len+1]=='.')
+        	break;
+        	++n,b=0,val=0;
+		}
+        else if(IP[len]>='0' && IP[len]<='9'){
+        	++b;
+        	val=val*10+(IP[len]-48);
+		}
+        else
+            return "Neither";
+    }
+    if(n==3 && val<=255)
+        return "IPv4";
+    else 
+        return "Neither";
+}
+class Solution {
+public:
+    string validIPAddress(string IP) {
+        if(IP[1]=='.' || IP[2]=='.' || IP[3]=='.')
+            return valIPv4(IP);
+        else if(IP[1]==':' || IP[2]==':' || IP[3]==':' || IP[4]==':')
+            return valIPv6(IP);
+        else
+            return "Neither";
+    return "Neither";
+    }
+};
