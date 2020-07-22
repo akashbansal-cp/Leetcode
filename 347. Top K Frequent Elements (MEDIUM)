@@ -1,0 +1,23 @@
+//https://leetcode.com/problems/top-k-frequent-elements/
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int,int> data;
+        for(int i=0;i<nums.size();++i){
+            if(data.end()==data.find(nums[i]))
+                data.insert(make_pair(nums[i],1));
+            else
+                data.find(nums[i])->second++;
+        }
+        vector<int> ans;
+        for(auto  e:data)
+            ans.push_back(e.second);
+        sort(ans.begin(),ans.end());
+        int m=ans[ans.size()-k];
+        ans.clear();
+        for(auto e:data)
+            if(e.second>=m)
+                ans.push_back(e.first);
+        return ans;
+    }
+};
