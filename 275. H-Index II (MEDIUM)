@@ -1,0 +1,24 @@
+//https://leetcode.com/problems/h-index-ii/
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+        //Answer should be produced using binary search as the vector is already sorted.
+        int s=citations.size();
+        if(!s)
+            return 0;
+        int i=0,j=s-1;
+        while(j-i>1){
+            if(citations[(i+j)/2]>=s-(i+j)/2)
+                j=(i+j)/2;
+            else
+                i=(i+j)/2;
+        }
+        if(!(i-j) && citations[i]>s-i)
+            return s-i;
+        else if(citations[i]>=s-i)
+            return s-i;
+        else if(citations[j]>=s-j)
+            return s-j;
+        return 0;
+    }
+};
