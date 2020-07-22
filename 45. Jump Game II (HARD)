@@ -1,0 +1,29 @@
+//https://leetcode.com/problems/jump-game-ii/
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int n=nums.size()-1;
+        if(nums.size()==1)
+            return 0;
+        vector<vector<int> > value;
+        value.push_back({n,0});
+        for(int i=nums.size()-2;i>=0;--i){
+            int z=0;
+            if(nums[i]!=0 && value.empty()==false){
+                    int max_val,max_valu=value[value.size()-1][0];
+                    while(value[value.size()-1][0]+value[value.size()-1][1] <= i+nums[i]){
+                        max_val=value[value.size()-1][0]+value[value.size()-1][1];
+                        value.pop_back();
+                        ++z;
+                        if(value.empty()==true)
+                            break;
+                    }
+                if(z!=0)
+                    value.push_back({i,max_val-i});
+                else
+                    value.push_back({i,max_valu-i});
+            }
+        }
+        return value.size();
+    }
+};
