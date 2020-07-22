@@ -1,0 +1,68 @@
+//https://leetcode.com/problems/course-schedule-ii/
+struct Node{
+	int val;
+	Node* next;
+	Node(){};
+	Node(int _val,Node* _next){
+		val=_val;
+		next=_next;
+	}
+	Node(int _val){
+		val=_val;
+		next=NULL;
+	}
+};
+class Solution {
+public:
+    bool* vst;
+    vector<int> ans;
+    bool dfs(int i,vector<Node*> &edges){
+    	stack<int> data;
+        set<int> dt;
+    	int n;
+	    data.push(i);
+        dt.insert(i);
+	    while(!data.empty()){
+		    n=data.top();
+		    Node* s=edges[n];
+	    	while(s){
+                if(vst[s->val]){
+                    if(dt.find(s->val)!=dt.end())
+                        return false;
+                }
+		    	if(!vst[s->val]){
+			    	vst[s->val]=1;
+				    data.push(s->val);
+                    dt.insert(s->val);
+				    break;
+    			}
+    			s=s->next;
+		    }
+		    if(!s){
+			    data.pop();
+			    ans.push_back(n);
+		    }
+	    }
+    	return true;
+    }
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vst=new bool[numCourses];
+        for(int i=0;i<numCourses;++i)
+            vst[i]=0;
+	    vector<Node*> edge(numCourses,NULL);
+	    for(int i=0;i<prerequisites.size();++i){
+		    	Node* s;
+			    s=new Node(prerequisites[i][1],edge[prerequisites[i][0]]);
+			    edge[prerequisites[i][0]]=s;
+	    }
+	    //End of insertion of Edges
+	    for(int i=0;i<numCourses;++i){
+		    if(!vst[i]){
+			    vst[i]=1;
+			    if(!dfs(i,edge))
+                    return {};
+		    }
+	    }
+        return ans;
+    }
+};
