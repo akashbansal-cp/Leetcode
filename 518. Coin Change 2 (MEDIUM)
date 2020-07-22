@@ -1,0 +1,20 @@
+//https://leetcode.com/problems/coin-change-2/
+class Solution {
+public:
+    int change(int amount, vector<int>& coins) {
+        int data[coins.size()+1][amount+1];
+        for(int i=0;i<=amount;++i)
+            data[0][i]=0;
+        for(int i=0;i<=coins.size();++i)
+            data[i][0]=1;
+        for(int rows=1;rows<=coins.size();++rows){
+            for(int columns=1;columns<=amount;++columns){
+                if(columns < coins[rows-1])
+                    data[rows][columns]=data[rows-1][columns];
+                else
+                    data[rows][columns]=data[rows-1][columns]+data[rows][columns-coins[rows-1]];
+            }
+        }
+        return data[coins.size()][amount];
+    }
+};
