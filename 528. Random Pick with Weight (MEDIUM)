@@ -1,0 +1,30 @@
+//https://leetcode.com/problems/random-pick-with-weight/
+class Solution {
+public:
+    vector<int> arr;
+    int max_weight;
+    Solution(vector<int>& w) {//Solution is  just an constructor
+        for(int  i=0;i<w.size();++i){
+            if(i==0)
+                arr.push_back(w[0]);
+            else
+                arr.push_back(arr[i-1]+w[i]);
+        }
+        max_weight=arr[arr.size()-1];
+    }
+    
+    int pickIndex() {//pickIndex is the only function
+        int random_number = rand() % max_weight + 1;
+        int x=0;
+        while(random_number > arr[x]){
+             ++x;
+        }
+        return x;
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(w);
+ * int param_1 = obj->pickIndex();
+ */
