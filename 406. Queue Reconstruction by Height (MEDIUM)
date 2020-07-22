@@ -1,0 +1,49 @@
+//https://leetcode.com/problems/queue-reconstruction-by-height/
+class Solution {
+public:
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+        vector<int> data;
+        vector<vector<int> > queue;
+        for(int i=0;i<people.size();++i)
+            data.push_back(people[i][1]);
+        auto it_p=people.begin();
+        auto it_d=data.begin();
+        auto itt_p=people.begin();
+        auto itt_d=data.begin();
+        int least = -1,insert=0;
+        int n=people.size();
+        for(int i=0;i<n;++i,++it_p,++it_d){
+            if(i==0)
+               itt_p=people.begin(),itt_d=data.begin(),it_p=people.begin(),it_d=data.begin(); 
+            if(data[i]==0){
+                if(least==-1){
+                    least=people[i][0];
+                    itt_p=it_p;
+                    itt_d=it_d;
+                    insert=i;
+                }   
+                else{
+                    if(least!=min(least,people[i][0])){
+                        itt_p=it_p;
+                        itt_d=it_d;
+                        insert=i;
+                        least=min(least,people[i][0]);
+                    } 
+                }     
+            }
+            if(i==n-1){
+                queue.push_back(people[insert]);
+                people.erase(itt_p);
+                data.erase(itt_d);
+                for(int j=0;j<n-1;++j){
+                    if(people[j][0] <= least){
+                        --data[j];
+                    }
+                }
+                i=-1;n=people.size();
+                least=-1;
+            }
+        }
+        return queue;
+   }
+};
