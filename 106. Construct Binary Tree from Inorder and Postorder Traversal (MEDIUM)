@@ -1,0 +1,44 @@
+//https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution{
+	public:
+		TreeNode* build(vector<int>& inorder,int x,int y,vector<int>& postorder,int i,int j){
+			int r=y;
+			while(inorder[r]!=postorder[j])
+				--r;
+			if(i==j){
+				TreeNode* root;
+                root=new TreeNode(postorder[i],NULL,NULL);
+                return root;
+			}
+            TreeNode* rn;
+            if(r+1<=y && j-y+r<=j-1)
+			    rn=build(inorder,r+1,y,postorder,j-y+r,j-1);
+			else
+                rn=NULL;
+            TreeNode* ln;
+            if(x<=r-1 && i<=j-y+r-1)
+                ln=build(inorder,x,r-1,postorder,i,j-y+r-1);
+			else
+                ln=NULL;
+            TreeNode* root;
+			root=new TreeNode(postorder[j],ln,rn);
+			return root;
+		}
+		TreeNode* buildTree(vector<int>& inorder,vector<int>& postorder) {
+            if(inorder.size()==0)
+                return NULL;
+			TreeNode* root=build(inorder,0,inorder.size()-1,postorder,0,postorder.size()-1);
+            return root;
+		}
+};
