@@ -1,29 +1,15 @@
-//https://leetcode.com/problems/plus-one/
-class Solution {
-public:
-    void plus(vector<int>& d,int n){
-        if(n==0 && d[n]==9){
-            vector<int> dig;
-            dig.push_back(0);
-            for(int e:d)
-                dig.push_back(e);
-            d=dig;
-            n+=1;
+Class Solution{
+    public int[] plusOne(int num[]){
+        for(int i=num.length-1;i>=0;i--){
+            if(num[i]<9){
+                num[i]++;
+                return num;
+            }
+            num[i]=0;
         }
-        if(d[n]==9){
-            d[n]=0;
-            plus(d,n-1);
-        }
-        else{
-            d[n]+=1;
-            
-        }
+        num=new int[num.length+1];
+        num[0]=1;
+        return num;
     }
-    vector<int> plusOne(vector<int>& digits) {
-        int n=digits.size()-1; 
-            plus(digits,n);
-            return digits;
-        return {};
+}
         
-    }
-};
