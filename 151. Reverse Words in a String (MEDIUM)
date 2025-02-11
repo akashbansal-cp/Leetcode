@@ -1,27 +1,11 @@
-//https://leetcode.com/problems/reverse-words-in-a-string/
-class Solution {
-public:
-    string reverseWords(string s) {
-        vector<string> all;
-        string str="";
-        for(int i=0;i<s.length();++i){
-            if(s[i]!=' ')
-            str+=s[i];
-            else if(s[i]==' ' && s[i+1]!=' ' && str!=""){
-                all.push_back(str);
-                str="";
-            }
+Class Solution{
+    public String reverseDtring(String s){
+        int n=s.length();
+        String sentence[]=s.trim().split("\\s+");
+        String result="";
+        for(int i=sentence.length-1;i>0;i--){
+            result=result+sentence[i]+" ";
         }
-        if(str!="")
-        all.push_back(str);
-        string ans="";
-        for(int i=all.size()-1;i>0;--i){
-            ans+=all[i];
-            cout << all[i] << endl;
-            ans+=' ';
-        }
-        if(all.size())
-        ans+=all[0];
-        return ans;
+        return result+sentence[0];
     }
-};
+}    
